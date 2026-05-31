@@ -1,0 +1,1499 @@
+*{
+    outline: 1px solid rgba(255, 0, 0, 0);
+}
+
+/* Disable native smooth scroll to let Lenis take over */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+
+
+body {
+    margin: 0;
+    /* Forces siblings like .home-page-main-content and .work-section 
+       to stack on top of each other instead of side-by-side */
+    display: flex;
+    flex-direction: column; 
+    width: 100%;
+    background:
+        radial-gradient(circle at 0% 0%, rgba(0, 0, 0, 0.274), transparent 60%),
+        radial-gradient(circle at 110% 110%, rgba(0, 0, 0, 0.541), transparent 60%)
+        #ffffff;
+}
+
+/* Vertical center line */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 100vh;
+    background: rgba(255, 0, 0, 0);
+    z-index: 9999;
+    pointer-events: none;
+}
+
+/* Horizontal center line */
+body::after {
+    content: "";
+    position: fixed;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(0, 0, 255, 0);
+    transform: translateY(-50%);
+    z-index: 9999;
+    pointer-events: none;
+}
+
+::-webkit-scrollbar{
+    width: 0;
+}
+
+
+/*=============================================================================================================================================*/
+/*================================================ CURSOR ANIMATION ===========================================================================*/
+/*=============================================================================================================================================*/
+
+
+
+/* outer ring */
+.cursor-ring {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+
+    background: conic-gradient(
+        transparent 0deg 45deg,
+        rgba(0, 0, 0, 0.5) 45deg 135deg,
+        transparent 135deg 225deg,
+        rgba(0, 0, 0, 0.5) 225deg 315deg,
+        transparent 315deg 360deg
+    );
+    border-radius: 50%;
+
+    pointer-events: none;
+    z-index: 9998;
+
+    /* 👇 IMPORTANT */
+    transform: translate(-50%, -50%);
+    animation: rotateRing 4s linear infinite;
+
+    -webkit-mask: radial-gradient(circle, transparent 65%, black 66%);
+    mask: radial-gradient(circle, transparent 65%, black 66%);
+
+    animation: rotateRing 4s linear infinite;
+    transition: transform 0.15s ease;
+    will-change: transform;
+}
+.cursor-ring.expand {
+    width: 62px;
+    height: 62px;
+
+    /* slower rotation */
+    animation-duration: 2s;
+    -webkit-mask: radial-gradient(circle, transparent 65%, black 66%);
+    mask: radial-gradient(circle, transparent 65%, black 66%);
+}
+@keyframes rotateRing {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/*=============================================================================================================================================*/
+
+
+
+
+/*=============================================================================================================================================*/
+/*========================================================= NAVIGATION BAR ====================================================================*/
+/*=============================================================================================================================================*/
+.navbar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 10000;
+    background: transparent;
+}
+
+/* Container setup for absolute positioning math */
+.navbar-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; 
+    gap: 0;
+}
+
+/* --- NAV LINKS SYSTEM --- */
+.nav-left, .nav-right {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    padding: 20px 80px; /* Invisible hover bridge */
+    
+    /* FIX: Forces both lists to be exactly 50% width to balance the center gap */
+    flex: 1; 
+
+    opacity: 0;
+    transform: translateY(10px);
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.4s ease 0.4s, transform 0.4s ease 0.4s, visibility 0s 0.8s;
+}
+
+/* Alignment corrections to meet perfectly at the center logo */
+.nav-left {
+    justify-content: flex-end;
+}
+
+.nav-right {
+    justify-content: flex-start;
+}
+
+.nav-left a, .nav-right a {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    padding: 15px 10px;
+    display: block;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.nav-left a:hover, .nav-right a:hover {
+    color: #464646 !important; /* Batman Red */
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+/* --- LOGO --- */
+.navbar-logo {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -20px); /* Sets up combined position/animation start */
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10005;
+    padding: 0 35px; /* Adjust this to change the empty safety gap around your logo */
+    
+    /* FIX: Blend mode lives on the anchor wrapper */
+    mix-blend-mode: difference; 
+}
+
+.navbar-logo img {
+    height: auto;
+    width: 80px;
+    display: block;
+    cursor: pointer;
+    image-rendering: auto;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- ANIMATIONS & HOVER LOGIC --- */
+@keyframes logoIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+.logo-anim {
+    animation: logoIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Reveal menus on hover actions */
+.navbar:has(.navbar-logo:hover) .nav-left,
+.navbar:has(.navbar-logo:hover) .nav-right,
+.navbar:has(.nav-left:hover) .nav-left,
+.navbar:has(.nav-right:hover) .nav-right {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+}
+
+/* --- BLUR OVERLAY --- */
+.nav-blur-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    z-index: 5000;
+    pointer-events: none;
+    opacity: 0;
+    transition: backdrop-filter 0.5s ease 0.4s, opacity 0.5s ease 0.4s;
+}
+
+/*=============================================================================================================================================*/
+
+
+
+/*=============================================================================================================================================*/
+/*========================================================= INTRO VIDEO =======================================================================*/
+/*=============================================================================================================================================*/
+#intro-video{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+/* BOTH HALVES */
+.half{
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* LEFT HALF */
+.left{
+    left: 0;
+}
+
+/* RIGHT HALF */
+.right{
+    right: 0;
+}
+
+/* VIDEO SETTINGS */
+.split-video{
+    width: 200%;   /* VERY IMPORTANT */
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.1);
+}
+
+
+/* SHOW LEFT PART */
+.left .split-video{
+    transform: translateX(0%);
+}
+
+/* SHOW RIGHT PART */
+.right .split-video{
+    transform: translateX(-50%);
+}
+/*=============================================================================================================================================*/
+
+
+/*=============================================================================================================================================*/
+/*================================================= HOME PAGE / MAIN CONTENT / MAIN TITLE =====================================================*/
+/*=============================================================================================================================================*/
+.home-page-main-content{
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    z-index: 1;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.bg-title-container {
+    position: relative; /* CRUCIAL: Keeps the tagline attached to this container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.bg-title-container p {
+    line-height: 1;
+    font-size: 7rem;
+    letter-spacing: 30px;
+    text-align: center;
+    margin: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+
+    font-family: "Batman", sans-serif;
+    font-weight: normal;
+    font-style: normal;
+
+    /* Gradient text */
+    background: linear-gradient(to bottom, #2a2a2a 0%, #111 100%, #555 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    /* Clean 3D depth */
+    text-shadow: 
+        1px 1px 0 rgb(66, 66, 66),   /* light edge */
+        -1px -1px rgb(255, 255, 255),
+        4px 5px 10px rgba(0, 0, 0, 0.568); /* soft shadow */
+
+    /* Optional: smoother rendering */
+    -webkit-font-smoothing: antialiased;
+    
+    /*ANIMATION*/
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.show-BG-title {
+    animation: fadeSlideDown 1.2s ease-out forwards;
+}
+
+
+.paragraph-variant2{
+    display: block;
+    text-align: center;
+
+    font-size: 2rem;
+    letter-spacing: 20px;
+
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/*========== SMALL VERTICAL LINE 01 =========*/
+.line01 {
+    width: 2px;
+    height: 30px;
+    background: rgb(66, 66, 66);
+    border: none;
+    margin: 0 auto;
+    flex-shrink: 0;
+
+    /* animation */
+    transform: scaleY(0);
+    transform-origin: center;
+}
+.show-line01{
+    animation: spreadLine 1s ease forwards;
+}
+@keyframes spreadLine {
+    to {
+        transform: scaleY(1);
+    }
+}
+/*===========================================*/
+
+
+
+
+.subtitle-container {
+    display: grid;
+    /* 1fr auto 1fr ensures the middle 'auto' column is always perfectly centered */
+    grid-template-columns: 1fr auto 1fr; 
+    align-items: center;
+    gap: 20px; /* Add some gap so the text doesn't touch the line */
+    width: 100%;
+}
+
+/* Force the Web Developer text to the right (towards the line) */
+#title-web {
+    text-align: right;
+    justify-self: end; 
+}
+
+/* Force the Graphic Design text to the left (towards the line) */
+#title-graphic {
+    text-align: left;
+    justify-self: start;
+}
+/* --- SUBTITLE BASE STYLES --- */
+.subtitle {
+    opacity: 0;
+    font-family: "Batman", sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+    line-height: 1;
+    background: linear-gradient(to bottom, #2a2a2a 0%, #111 100%, #555 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 
+        1px 1px 0 rgb(66, 66, 66),
+        -1px -1px rgb(255, 255, 255),
+        4px 5px 10px rgba(0, 0, 0, 0.548);
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: 6px;
+    font-size: 1rem;
+}
+
+/* --- VARIANT SPECIFICS --- */
+.subtitle.variant-1 {
+    align-self: center;
+}
+
+.subtitle.variant-2 {
+    align-self: center;
+    padding-right: 50px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+/* --- TRIGGER ANIMATIONS ONLY ON SHOW --- */
+.subtitle.variant-1.show {
+    opacity: 1;
+    animation: fadeRight 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.subtitle.variant-2.show {
+    opacity: 1;
+    animation: fadeLeft 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+
+
+
+
+
+/* --- KEYFRAMES --- */
+@keyframes fadeRight {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*============= LETTER-FONT ================*/
+@font-face {
+    font-family: "Batman";
+    src: url("font/batmfa__.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*============= MOBILE ================*/
+@media (max-width: 480px) {
+    .bg-title-container p {
+        font-size: 4.5rem;
+        letter-spacing: 2px;
+        text-align: center;
+    }
+}
+
+/* --- TAGLINE CONTAINER --- */
+.tagline-container {
+    position: absolute;
+    top: 100%; /* Places it exactly at the bottom of the subtitle container */
+    left: 50%;
+    transform: translateX(-50%); /* Centers it horizontally */
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 600px; /* Give it a fixed width so it centers correctly */
+    margin-top: 40px; /* Visual gap below the subtitles */
+    z-index: 10;
+}
+
+/* 3. The Tagline Text Styles */
+.bg-title-container .tagline {
+    all: unset; /* Prevents inheriting giant title styles */
+    display: block;
+    font-size: 0.9rem !important; 
+    letter-spacing: 2px !important;
+    line-height: 1.5 !important;
+    text-align: center;
+    font-family: sans-serif;
+    color: #444 !important;
+    max-width: 500px;
+    margin-bottom: 25px !important;
+    user-select: none;
+    cursor: default;
+    -webkit-user-select: none;
+    
+    /* ANIMATION */
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.tagline.show-tagline01 {
+    animation: simpleFadeUp 1s ease-out forwards !important;
+}
+
+/* 4. The Button Styles */
+.cta-button {
+    all: unset;
+    display: inline-block;
+    padding: 12px 28px;
+
+    background: #dadada; /* soft white (IMPORTANT for neumorphism) */
+    color: #111 !important;
+
+    font-family: "Batman", sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+
+    border-radius: 12px;
+
+    /* NEUMORPHISM BASE */
+    box-shadow:
+        8px 8px 16px rgba(0, 0, 0, 0.15),
+        -8px -8px 16px rgba(255, 255, 255, 0.9);
+
+    transition: all 0.2s ease;
+
+    opacity: 0;
+}
+
+/* hover = slightly raised */
+.cta-button:hover {
+    box-shadow:
+        10px 10px 20px rgba(0, 0, 0, 0.18),
+        -10px -10px 20px rgba(255, 255, 255, 1);
+    transform: translateY(-2px);
+}
+
+/* pressed = inset (key neumorphism effect) */
+.cta-button:active {
+    box-shadow:
+        inset 6px 6px 12px rgba(0, 0, 0, 0.15),
+        inset -6px -6px 12px rgba(255, 255, 255, 0.8);
+    transform: translateY(1px);
+}
+
+.show-button01{
+    animation: simpleFadeUp 1s ease-out forwards !important;
+}
+/* --- KEYFRAME --- */
+@keyframes simpleFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/*=============================================================================================================================================*/
+
+
+
+/*=============================================================================================================================================*/
+/*========================================================= OBJECT 01 / BLOX PLUS =============================================================*/
+/*=============================================================================================================================================*/
+.plus-background{
+    position: absolute;
+    display: flex;
+    gap: 2vw;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 0;
+}
+
+/* VARIANTS */
+.plus-background.variant-1{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+    pointer-events: none;
+    user-select: none;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease;
+
+    transform: translate(80px, 90px);
+}
+
+.plus-background.variant-2{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 20px;
+    pointer-events: none;
+    user-select: none;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease;
+
+    transform: translate(-80px, -60px);
+}
+
+/* ROW */
+.plus-row {
+    display: flex;
+    gap: 0;
+    line-height: 1;
+    color: #000;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.9rem;
+    opacity: 0.5;
+}
+
+/* PLUS */
+.p {
+    display: inline-block;
+    width: 1.2em;
+    text-align: center;
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+
+/* SPIN */
+.inner{
+    display: inline-block;
+    animation: spinPlus 6s linear infinite;
+    will-change: transform;
+}
+
+@keyframes spinPlus {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* RIPPLE DELAY */
+.p:nth-child(1) { transition-delay: 0.2s; }
+.p:nth-child(2) { transition-delay: 0.1s; }
+.p:nth-child(3) { transition-delay: 0s; }
+.p:nth-child(4) { transition-delay: 0.1s; }
+.p:nth-child(5) { transition-delay: 0.2s; }
+
+/* STATES */
+.plus-row.state-1 .p {
+    transform: translateX(0);
+}
+
+.plus-row.state-2 .p:nth-child(1) { transform: translateX(-20px); }
+.plus-row.state-2 .p:nth-child(2) { transform: translateX(-10px); }
+.plus-row.state-2 .p:nth-child(4) { transform: translateX(10px); }
+.plus-row.state-2 .p:nth-child(5) { transform: translateX(20px); }
+
+.plus-row.state-3 .p:nth-child(1) { transform: translateX(-60px); }
+.plus-row.state-3 .p:nth-child(2) { transform: translateX(-30px); }
+.plus-row.state-3 .p:nth-child(4) { transform: translateX(10px); }
+.plus-row.state-3 .p:nth-child(5) { transform: translateX(20px); }
+
+.plus-row.state-4 .p:nth-child(1) { transform: translateX(-60px); }
+.plus-row.state-4 .p:nth-child(2) { transform: translateX(-30px); }
+.plus-row.state-4 .p:nth-child(4) { transform: translateX(30px); }
+.plus-row.state-4 .p:nth-child(5) { transform: translateX(60px); }
+
+/* SHOW ANIMATION (FIXED - NO TRANSFORM CONFLICT) */
+.show-CrossRotating {
+    visibility: visible !important;
+    opacity: 1;
+    animation: CrossFadeInUp 1.2s ease-out forwards;
+}
+
+@keyframes CrossFadeInUp {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+/*=============================================================================================================================================*/
+
+
+
+
+/*========================================================== REVISION ❌❌=========================================================================*/
+/*=============================================================================================================================================*/
+/*===================================================== OBJECT 02 / SPINNING CIRCLE ===========================================================*/
+/*=============================================================================================================================================*/
+
+.spinCircle-wrapper {
+    position: absolute;
+    display: flex;
+    gap: 2vw;
+    z-index: 2;
+    opacity: 0; /* Hidden initially */
+    visibility: hidden;
+    z-index: 0;
+}
+
+.spinCircle-wrapper.variant-1 { 
+    top: 60vh; left: 13vw; 
+}
+
+.spinCircle-wrapper.variant-2 { 
+    top: 40vh; right: 15vw; 
+}
+
+.half-circle {
+    width: 80px;
+    height: 40px;
+    border: 20px solid #464646;
+    border-top: none;
+    border-radius: 0 0 100px 100px;
+    transform-origin: center top;
+    opacity: 0.4;
+}
+
+.half-circle.variant-1 { 
+    animation: spin-circle-variant-1 2s ease-in-out infinite; 
+}
+.half-circle.variant-2 { 
+    border-color: rgb(0, 0, 0); animation: spin-circle-variant-2 2s ease-in-out infinite; 
+}
+
+.show-spinCircle {
+    visibility: visible !important;
+    animation: fadeUpIn 1.2s ease-out forwards;
+}
+
+@keyframes fadeUpIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin-circle-variant-1 { 
+    0% { 
+        transform: rotate(0deg); 
+    } 
+    50% { 
+        transform: rotate(180deg); 
+    } 
+    100% { 
+        transform: rotate(360deg); 
+    } 
+}
+
+@keyframes spin-circle-variant-2 { 
+    0% { 
+        transform: rotate(0deg); 
+    } 
+    50% { 
+        transform: rotate(-180deg); 
+    } 
+    100% { 
+        transform: rotate(-360deg); 
+    } 
+}
+@media (max-width: 768px){
+    .spinCircle-wrapper.variant-1{
+        top: 53vh;
+        left: 1vw;
+        gap: 10px;
+    }
+    .half-circle.variant-1{
+        width: 40px;
+        height: 20px;
+        border: 15px solid #464646;
+        border-top: none;
+        border-radius: 0 0 50px 50px;
+        display: flex;
+        transform-origin: center top;
+        opacity: 0.4;
+        animation: spin-circle-variant-1 2s ease-in-out infinite;
+    }
+
+    .spinCircle-wrapper.variant-2{
+        top: 49vh;
+        right: 1vw;
+        gap: 10px;
+    }
+    .half-circle.variant-2{
+        width: 40px;
+        height: 20px;
+        border: 15px solid rgb(66, 66, 66);
+        border-top: none;
+        border-radius: 0 0 100px 100px;
+        display: flex;
+        transform-origin: center top;
+        opacity: 0.4;
+        animation: spin-circle-variant-2 2s ease-in-out infinite;
+    }
+}
+
+/*=============================================================================================================================================*/
+
+
+
+
+/*=============================================================================================================================================*/
+/*===================================================== OBJECT 03 / DOUBLE-SPINNING CIRCLE ====================================================*/
+/*=============================================================================================================================================*/
+
+.circle-container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    opacity: 0.7;
+}
+
+/* BASE */
+.circle{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    box-sizing: border-box;
+    transform-origin: center;
+}
+
+/* 🔵 FIRST CIRCLE → TOP MISSING (U shape) */
+.circle-1{
+    width: 300px;
+    height: 300px;
+    border: 2px solid black;
+    border-top: none;
+
+    transform: translate(-50%, -50%);
+    animation: rotateSlow 8s linear infinite;
+    opacity: 0.6;
+}
+
+/* 🔵 SECOND CIRCLE → BOTTOM MISSING (inverted U) */
+.circle-2{
+    width: 200px;
+    height: 200px;
+    border: 2px solid black;
+    border-bottom: none;
+
+    transform: translate(-50%, -50%);
+    animation: rotateReverse 7s linear infinite;
+    opacity: 0.6;
+}
+.circle-3{
+    width: 400px;
+    height: 400px;
+    border: 2px solid black;
+    border-top: none;
+    border-bottom: none;
+
+    transform: translate(-50%, -50%);
+    animation: rotateReverse 7s linear infinite;
+    opacity: 0.6;
+}
+.circle-4{
+    width: 500px;
+    height: 500px;
+    border: 2px solid black;
+    border-top: none;
+    border-bottom: none;
+    transform: translate(-50%, -50%);
+    animation: rotateSlow 7s linear infinite;
+    opacity: 0.3;
+}
+.circle-5{
+    width: 600px;
+    height: 600px;
+    border: 2px solid black;
+    border-top: none;
+    border-bottom: none;
+    transform: translate(-50%, -50%);
+    animation: rotateReverse 7s linear infinite;
+    opacity: 0.2;
+}
+.circle-6{
+    width: 1300px;
+    height:0;
+    border: 2px solid black;    
+    transform: translate(-50%, -50%);
+    opacity: 0.4;
+}
+
+/* ROTATION */
+@keyframes rotateSlow {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes rotateReverse {
+    from { transform: translate(-50%, -50%) rotate(360deg); }
+    to   { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+/*=============================================================================================================================================*/
+
+
+
+/*=============================================================================================================================================*/
+/*================================================ OBJECT04 / MOVING ARROW ====================================================================*/
+/*=============================================================================================================================================*/
+
+.arrow-up-container {
+    position: absolute;
+    display: flex;
+    gap: 2vw;
+    z-index: 1; /* Ensure it's visible but behind text */
+    user-select: none;
+    pointer-events: none;
+    /* Initial state if you want to fade it in later */
+    opacity: 0.5; 
+}
+
+.arrow-up-container.variant-1 {
+    /* POSITIONING: Bottom Left */
+    bottom: 9vh; 
+    left: 3vw;
+    
+    /* FLEX: Align them locally */
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    /* THE FIX: Combine translate and rotate into ONE line */
+    /* Adjust translate values to fine-tune the corner distance */
+    transform: translate(20px, -20px) rotate(-90deg);
+}
+
+.arrow-up-container.variant-2 {
+    /* POSITIONING: Bottom Left */
+    top: 15vh; 
+    right: 5vw;
+    
+    /* FLEX: Align them locally */
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    /* THE FIX: Combine translate and rotate into ONE line */
+    /* Adjust translate values to fine-tune the corner distance */
+    transform: translate(20px, -20px) rotate(90deg);
+}
+
+.arrow-row {
+    display: flex;
+}
+
+.arrow-p{
+    display: inline-block;
+    letter-spacing: -9px;
+    font-size: 3rem;
+    font-weight: 600;
+    display: inline-block;
+    transform: scaleY(2.5);
+    color: rgb(66, 66, 66);
+
+    /*--- UPWARD ANIMATION ---*/
+    transform-origin: center;
+    animation: stepUpAndWait 3s ease-in-out infinite;
+}
+
+/* --- STAGGERED DELAYS --- */
+/* We want them to trigger in order: 1, 2, 3, 4 */
+.arrow-p:nth-child(1) { animation-delay: 0s; }
+.arrow-p:nth-child(2) { animation-delay: 0.2s; }
+.arrow-p:nth-child(3) { animation-delay: 0.4s; }
+.arrow-p:nth-child(4) { animation-delay: 0.6s; }
+
+/* --- THE "WAIT FOR ME" ANIMATION --- */
+@keyframes stepUpAndWait {
+    0%, 10% {
+        /* Start position - slightly transparent */
+        transform: scaleY(1.8) translateX(0);
+        opacity: 0.3;
+    }
+    
+    /* 30% is when the FIRST arrow hits the top.
+    80% is when the LAST arrow starts to leave the top. 
+       This 50% gap (30 to 80) is where they all 'wait' for each other. */
+    30%, 80% {
+        /* Move UP and HOLD FORMATION */
+        transform: scaleY(1.8) translateX(-30px);
+        opacity: 1;
+    }
+
+    95%, 100% {
+        /* All return back to the start */
+        transform: scaleY(1.8) translateX(0);
+        opacity: 0.3;
+    }
+}
+
+/* Ensure your base class has the animation applied */
+.arrow-p {
+    display: inline-block;
+    transform: scaleY(1.8) translateX(0);
+    animation: stepUpAndWait 4s ease-in-out infinite;
+}
+
+/*=============================================================================================================================================*/
+
+
+
+
+
+
+/*=============================================================================================================================================*/
+/*============================================ OBJECT 07 / BACKGROUND DESIGN PLUKADOTS ========================================================*/
+/*=============================================================================================================================================*/
+
+.halftone-container{
+    /* CRITICAL: Must be absolute or fixed to move to corners */
+    position: absolute; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.halftone-container.variant-1{
+    /* POSITIONING */
+    bottom: 1vh;   /* Distance from bottom */
+    left: 3vw;     /* Distance from left */
+    z-index: 0;
+    pointer-events: none; /* Allows you to click things 'behind' the dots */
+    opacity: 0.3;
+}
+
+.halftone-container.variant-2{
+    /* POSITIONING */
+    top: 1vh;   /* Distance from bottom */
+    right: 3vw;     /* Distance from left */
+    z-index: 0;
+    pointer-events: none; /* Allows you to click things 'behind' the dots */
+    opacity: 0.3;
+}
+
+
+/* The Halftone Pattern */
+.halftone {
+    width: 300px;
+    height: 300px;
+
+    /* dot pattern */
+    background-image: radial-gradient(circle, black 2px, transparent 0.5px);
+
+    /* spacing between dots */
+    background-size: 10px 10px;
+
+    /* fade effect */
+    mask-image: radial-gradient(circle, black 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(circle, black 20%, transparent 75%);
+}
+
+/*=============================================================================================================================================*/
+
+
+
+
+/*=============================================================================================================================================*/
+/*============================================ OBJECT 08 / BACKGROUND lIGHTNING DESIGN ========================================================*/
+/*=============================================================================================================================================*/
+
+.object07-BG-design {
+    position: absolute; /* Changed from relative */
+    top: 0;
+    left: 0;
+    width: 100%;    /* Ensure the container spans the full width */
+    height: 100vh;
+    z-index: -1;    /* Push it behind everything else */
+    overflow: hidden;
+    pointer-events: none; /* So it doesn't block clicks on your site */
+    overflow: hidden;
+    opacity: 0.6;
+}
+
+.object07-BG-design img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.2);
+    
+    
+    
+    /* ADD THIS: Ensures the image scales properly */
+    max-width: 100%;
+    height: auto;
+}
+@media (max-width: 1024px){
+    .object07-BG-design img{
+        width: 55vw;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .object07-BG-design {
+        position: fixed; 
+        top: 0;
+        left: 0;
+        width: 100%; /* Using % is safer on some mobile browsers */
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+    }
+
+    .object07-BG-design img {
+        /* 1. Reset standard positioning */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        
+        /* 2. Force it to be much larger than the screen */
+        /* If rotated 90deg, the image needs to be TALLER than the phone width */
+        width: 100vh;  /* Use VH for width because it's rotated */
+        height: 100vw; /* Use VW for height because it's rotated */
+        
+        object-fit: cover;
+        
+        /* 3. Combined Transform */
+        /* We use scale(2) to make sure there are NO white gaps in the corners */
+        transform: translate(-50%, -50%) rotate(90deg) scale(2.2);
+        
+        opacity: 0.6 !important; /* Force visibility */
+        display: block !important; /* Ensure it's not hidden */
+    }
+}
+
+/*=============================================================================================================================================*/
+
+
+
+
+
+
+
+
+
+
+.card-container {
+    width: 300px;
+    height: 400px;
+    perspective: 1000px;
+    margin: 100px auto; /* Centered for better effect */
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out; /* Smooth follow effect */
+    
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    font-size: 24px;
+}
+
+.front { 
+    background: #3498db; color: white; 
+}
+
+.back { 
+    background: #2ecc71; 
+    color: white; 
+    transform: rotateY(180deg); 
+}
+
+
+
+
+
+/*=============================================================================================================================================*/
+/*============================================ OBJECT 09 / BACKGROUND RHOMBUS DESIGN ==========================================================*/
+/*=============================================================================================================================================*/
+/**
+.rhombus{
+    width: 120px;
+    height: 120px;
+
+    border: 2px solid rgba(0, 0, 0, 0.5);
+
+    transform: rotate(45deg);
+
+    position: absolute;
+
+    backdrop-filter: blur(2px);
+
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+    0%{
+        transform: rotate(45deg) translateY(0px);
+    }
+
+    50%{
+        transform: rotate(45deg) translateY(-15px);
+    }
+
+    100%{
+        transform: rotate(45deg) translateY(0px);
+    }
+}
+
+**/
+
+/*=============================================================================================================================================*/
+
+
+
+
+/*=============================================================================================================================================*/
+/*============================================ OBJECT 09 / BACKGROUND RHOMBUS DESIGN ==========================================================*/
+/*=============================================================================================================================================*/
+
+.project-hidden {
+    display: none;
+}
+
+
+/* when shown */
+#projects-section.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#home-section {
+    height: 100vh;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.8s ease-in-out;
+}
+#projects-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto; /* Change from 'scroll' to 'auto' */
+    -webkit-overflow-scrolling: touch; /* Helps with smooth scrolling on mobile */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center;  REMOVE THIS! It forces content to the middle vertically */
+    z-index: 100;
+    transform: translateY(100%); 
+    outline: none;    /* Removes focus ring on scroll */
+    
+    /* 2. Smooth "sliding up" animation */
+    transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+    z-index: 100;
+}
+
+
+/* When this class is added, the project section slides in */
+#projects-section.active {
+    transform: translateY(0%);
+}
+
+.back-button {
+    position: fixed;
+    top: 550px;
+    left: 20px;
+    z-index: 2000;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transform: translateY(-20px);
+
+    transition: all 0.5s ease;
+
+    background: transparent;
+    mix-blend-mode: difference;
+
+    color: white;
+
+    padding: 10px 15px;
+    border: 1px solid white;
+
+    cursor: pointer;
+    font-size: 2rem;
+
+    /* IMPORTANT */
+    overflow: hidden;
+}
+
+/* SLIDING LAYER */
+.back-button::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: white;
+
+    transform: translateY(100%);
+    transition: transform 0.2s ease;
+
+    z-index: -1;
+}
+
+/* HOVER */
+.back-button:hover::after {
+    transform: translateY(0%);
+}
+
+.back-button:hover {
+    color: black;
+}
+/* 3. SHOW WHEN ACTIVE */
+.back-button.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+
+
+.project-page{
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    scroll-snap-align: start;
+    flex-shrink: 0;
+}
+
+.project01 {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+        background:
+        radial-gradient(circle at 10% 10%, rgba(0, 0, 0, 0.363), transparent 40%),
+        radial-gradient(circle at 110% 100%, rgba(0, 0, 0, 0.541), transparent 40%)
+        #ffffff;
+}
+
+/* CONTENT */
+.project-content {
+    position: relative;
+    z-index: 2;
+
+    color: rgb(0, 0, 0);
+    font-size: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+}
+
+/* GRID BACKGROUND */
+.grid-bg {
+    position: absolute;
+    inset: -60px 0 0 0;
+
+    z-index: 1;
+
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.150) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.150) 1px, transparent 1px),
+        radial-gradient(circle, rgba(0, 0, 0, 0.452) 1px, transparent 2px);
+
+    background-size: 
+        80px 80px,
+        80px 80px,
+        80px 80px;
+
+    /* DOT ALIGNMENT FIX */
+    background-position:
+        0 0,
+        0 0,
+        -40px -40px;
+
+    animation: moveGrid 15s linear infinite;
+}
+
+/* LOOP */
+@keyframes moveGrid {
+    from {
+        background-position:
+            0 0,
+            0 0,
+            -40px -40px;
+    }
+
+    to {
+        background-position:
+            0 80px,
+            0 80px,
+            -40px 40px;
+    }
+}
+
+.project02 {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 10% 110%, rgba(0, 0, 0, 0.363), transparent 40%),
+        radial-gradient(circle at 110% 10%, rgba(0, 0, 0, 0.541), transparent 40%)
+        #ffffff;
+}
+
+.project03 {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(0, 0, 0, 0.363), transparent 40%),
+        radial-gradient(circle at 110% 100%, rgba(0, 0, 0, 0.541), transparent 40%)
+        #ffffff;
+}
