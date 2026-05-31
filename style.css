@@ -1,5 +1,5 @@
 *{
-    outline: 1px solid rgba(255, 0, 0, 0);
+    outline: 1px solid rgba(255, 0, 0, 0.295);
 }
 
 /* Disable native smooth scroll to let Lenis take over */
@@ -336,7 +336,7 @@ body::after {
 
 .bg-title-container p {
     line-height: 1;
-    font-size: 7rem;
+    font-size: 6rem;
     letter-spacing: 30px;
     text-align: center;
     margin: 0;
@@ -750,124 +750,19 @@ body::after {
 
 
 
-/*========================================================== REVISION ❌❌=========================================================================*/
+
 /*=============================================================================================================================================*/
-/*===================================================== OBJECT 02 / SPINNING CIRCLE ===========================================================*/
+/*===================================================== OBJECT 02 / RECTANGLE SHAPE ===========================================================*/
 /*=============================================================================================================================================*/
 
-.spinCircle-wrapper {
-    position: absolute;
-    display: flex;
-    gap: 2vw;
-    z-index: 2;
-    opacity: 0; /* Hidden initially */
-    visibility: hidden;
-    z-index: 0;
-}
-
-.spinCircle-wrapper.variant-1 { 
-    top: 60vh; left: 13vw; 
-}
-
-.spinCircle-wrapper.variant-2 { 
-    top: 40vh; right: 15vw; 
-}
-
-.half-circle {
-    width: 80px;
-    height: 40px;
-    border: 20px solid #464646;
-    border-top: none;
-    border-radius: 0 0 100px 100px;
-    transform-origin: center top;
-    opacity: 0.4;
-}
-
-.half-circle.variant-1 { 
-    animation: spin-circle-variant-1 2s ease-in-out infinite; 
-}
-.half-circle.variant-2 { 
-    border-color: rgb(0, 0, 0); animation: spin-circle-variant-2 2s ease-in-out infinite; 
-}
-
-.show-spinCircle {
-    visibility: visible !important;
-    animation: fadeUpIn 1.2s ease-out forwards;
-}
-
-@keyframes fadeUpIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes spin-circle-variant-1 { 
-    0% { 
-        transform: rotate(0deg); 
-    } 
-    50% { 
-        transform: rotate(180deg); 
-    } 
-    100% { 
-        transform: rotate(360deg); 
-    } 
-}
-
-@keyframes spin-circle-variant-2 { 
-    0% { 
-        transform: rotate(0deg); 
-    } 
-    50% { 
-        transform: rotate(-180deg); 
-    } 
-    100% { 
-        transform: rotate(-360deg); 
-    } 
-}
-@media (max-width: 768px){
-    .spinCircle-wrapper.variant-1{
-        top: 53vh;
-        left: 1vw;
-        gap: 10px;
-    }
-    .half-circle.variant-1{
-        width: 40px;
-        height: 20px;
-        border: 15px solid #464646;
-        border-top: none;
-        border-radius: 0 0 50px 50px;
-        display: flex;
-        transform-origin: center top;
-        opacity: 0.4;
-        animation: spin-circle-variant-1 2s ease-in-out infinite;
-    }
-
-    .spinCircle-wrapper.variant-2{
-        top: 49vh;
-        right: 1vw;
-        gap: 10px;
-    }
-    .half-circle.variant-2{
-        width: 40px;
-        height: 20px;
-        border: 15px solid rgb(66, 66, 66);
-        border-top: none;
-        border-radius: 0 0 100px 100px;
-        display: flex;
-        transform-origin: center top;
-        opacity: 0.4;
-        animation: spin-circle-variant-2 2s ease-in-out infinite;
-    }
-}
-
-
-
-.Rectangle-shape{
+.Rectangle-shape{           
     display: flex;
     justify-content: center;
     width: 1200px;
-    height: 300px;
-    background-color: rgba(128, 128, 128, 0.37);
+    height: 350px;
+    background-color: rgba(182, 182, 182, 0.493);
     position: absolute;
+    border-radius: 60px;
 }
 /*=============================================================================================================================================*/
 
