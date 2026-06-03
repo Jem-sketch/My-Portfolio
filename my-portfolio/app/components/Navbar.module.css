@@ -1,0 +1,135 @@
+.navbar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 10000;
+    background: transparent;
+}
+
+/* Container */
+.navbarContainer {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* NAV LISTS */
+.navLeft,
+.navRight {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    padding: 20px 80px;
+    flex: 1;
+
+    /* FIX: visible by default */
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    transform: translateY(0);
+}
+
+/* alignment */
+.navLeft {
+    justify-content: flex-end;
+}
+
+.navRight {
+    justify-content: flex-start;
+}
+
+/* LINKS */
+.navLeft a,
+.navRight a {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    padding: 15px 10px;
+    display: block;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/* hover */
+.navLeft a:hover,
+.navRight a:hover {
+    color: #464646;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+/* LOGO */
+.navbarLogo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10005;
+    mix-blend-mode: difference;
+}
+
+.navbarLogo img {
+    width: 60px;
+    height: auto;
+    display: block;
+    cursor: pointer;
+}
+
+/* ANIMATION */
+@keyframes logoIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+.logoAnim {
+    animation: logoIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* ==========================
+   TABLET
+========================== */
+@media (max-width: 1024px) {
+    .navLeft,
+    .navRight {
+        padding: 20px;
+        gap: 5px;
+    }
+
+    .navLeft a,
+    .navRight a {
+        font-size: 14px;
+    }
+
+    .navbarLogo img {
+        width: 50px;
+    }
+}
+
+/* ==========================
+   MOBILE
+========================== */
+@media (max-width: 768px) {
+    .navbarContainer {
+        justify-content: space-between;
+        padding: 15px 20px;
+    }
+
+    .navbarLogo {
+        position: static;
+        transform: none;
+    }
+
+    .navbarLogo img {
+        width: 45px;
+    }
+}

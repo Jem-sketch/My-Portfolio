@@ -43,3 +43,15 @@
     transform: translate(-50%, -50%) rotate(360deg);
   }
 }
+
+@media (max-width: 1024px){
+  .cursorRing{
+    display: none;
+  }
+}
+
+@media (max-width: 768px){
+  .cursorRing{
+    display: none;
+  }
+}

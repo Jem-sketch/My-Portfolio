@@ -346,60 +346,60 @@ window.addEventListener("scroll", () => {
    skips it on subsequent navigations within the same session.
    ============================================================ */
 
-if (navType === "reload" || !hasSeenIntro) {
-    // Mark intro as seen so it won't replay on soft navigations
-    sessionStorage.setItem("introSeen", "true");
+    if (navType === "reload" || !hasSeenIntro) {
+        // Mark intro as seen so it won't replay on soft navigations
+        sessionStorage.setItem("introSeen", "true");
 
-    if (intro) {
-        document.body.style.overflow = "hidden"; // Lock scroll during intro
-        intro.style.display = "block";
-    }
+        if (intro) {
+            document.body.style.overflow = "hidden"; // Lock scroll during intro
+            intro.style.display = "block";
+        }
 
-    // Wait for all split-screen videos to be ready before playing
-    const videoLoadPromises = Array.from(videos).map((v) =>
-        new Promise((resolve) => {
-            if (v.readyState >= 3) resolve();
-            else v.oncanplaythrough = resolve;
-        })
-    );
+        // Wait for all split-screen videos to be ready before playing
+        const videoLoadPromises = Array.from(videos).map((v) =>
+            new Promise((resolve) => {
+                if (v.readyState >= 3) resolve();
+                else v.oncanplaythrough = resolve;
+            })
+        );
 
-    Promise.all(videoLoadPromises).then(() => {
-        videos.forEach((v) => {
-            v.muted = true;
-            v.play();
-            v.style.filter = "brightness(0.4)";
-            v.playbackRate = 1.5;
-        });
-
-        // Brighten the videos after 2.5 seconds for a dramatic reveal
-        setTimeout(() => {
+        Promise.all(videoLoadPromises).then(() => {
             videos.forEach((v) => {
-                v.style.transition = "filter 1s ease";
-                v.style.filter = "brightness(1) contrast(1.3)";
+                v.muted = true;
+                v.play();
+                v.style.filter = "brightness(0.4)";
+                v.playbackRate = 1.5;
             });
-        }, 2500);
-    });
 
-    // When the intro ends, slide the panels apart and show the site
-    if (videos[0]) {
-        videos[0].addEventListener("ended", () => {
-            left.style.transform  = "translateX(-100%)";
-            right.style.transform = "translateX(100%)";
-
+            // Brighten the videos after 2.5 seconds for a dramatic reveal
             setTimeout(() => {
-                if (intro) intro.style.display = "none";
-                document.body.style.overflow = "auto";
-                triggerAllAnimations();
-            }, 1200); // Wait for the panel slide transition to complete
+                videos.forEach((v) => {
+                    v.style.transition = "filter 1s ease";
+                    v.style.filter = "brightness(1) contrast(1.3)";
+                });
+            }, 2500);
         });
-    }
 
-} else {
-    // Returning visitor: skip the intro and load the site immediately
-    if (intro) intro.style.display = "none";
-    document.body.style.overflow = "auto";
-    triggerAllAnimations();
-}
+        // When the intro ends, slide the panels apart and show the site
+        if (videos[0]) {
+            videos[0].addEventListener("ended", () => {
+                left.style.transform  = "translateX(-100%)";
+                right.style.transform = "translateX(100%)";
+
+                setTimeout(() => {
+                    if (intro) intro.style.display = "none";
+                    document.body.style.overflow = "auto";
+                    triggerAllAnimations();
+                }, 1200); // Wait for the panel slide transition to complete
+            });
+        }
+
+    } else {
+        // Returning visitor: skip the intro and load the site immediately
+        if (intro) intro.style.display = "none";
+        document.body.style.overflow = "auto";
+        triggerAllAnimations();
+    }
 
 
 /* ============================================================

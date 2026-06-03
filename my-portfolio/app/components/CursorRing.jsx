@@ -22,7 +22,7 @@ export default function CursorRing() {
 
     document.addEventListener("mousemove", handleMouseMove);
 
-    function animateRing() {
+    function animate() {
       if (!isHovering && ring) {
         ringX += (mouseX - ringX) * 0.15;
         ringY += (mouseY - ringY) * 0.15;
@@ -31,35 +31,42 @@ export default function CursorRing() {
         ring.style.top = `${ringY}px`;
       }
 
-      requestAnimationFrame(animateRing);
+      requestAnimationFrame(animate);
     }
 
-    animateRing();
+    animate();  
 
-    const hoverItems = document.querySelectorAll(
-      ".nav-left a, .nav-right a, .navbar-logo"
-    );
+    // ✅ FIXED SELECTOR (NO CSS MODULE ISSUES)
+    const hoverItems = document.querySelectorAll("[data-cursor='hover'], [data-cursor='logo']");
+
+    const handleEnter = (e) => {
+      isHovering = true;
+
+      const rect = e.target.getBoundingClientRect();
+
+      ring.style.left = `${rect.left + rect.width / 2}px`;
+      ring.style.top = `${rect.top + rect.height / 2}px`;
+
+      ring.classList.add(styles.expand);
+    };
+
+    const handleLeave = () => {
+      isHovering = false;
+      ring.classList.remove(styles.expand);
+    };
 
     hoverItems.forEach((item) => {
-      item.addEventListener("mouseenter", () => {
-        isHovering = true;
-
-        const rect = item.getBoundingClientRect();
-
-        ring.style.left = `${rect.left + rect.width / 2}px`;
-        ring.style.top = `${rect.top + rect.height / 2}px`;
-
-        ring.classList.add(styles.expand);
-      });
-
-      item.addEventListener("mouseleave", () => {
-        isHovering = false;
-        ring.classList.remove(styles.expand);
-      });
+      item.addEventListener("mouseenter", handleEnter);
+      item.addEventListener("mouseleave", handleLeave);
     });
 
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
+
+      hoverItems.forEach((item) => {
+        item.removeEventListener("mouseenter", handleEnter);
+        item.removeEventListener("mouseleave", handleLeave);
+      });
     };
   }, []);
 
