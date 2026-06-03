@@ -7,26 +7,26 @@ export default function Navbar(){
             <div className="navbar-container">
                 <ul className="nav-left">
                     <li>
-                        <link href="/">Home</link>
+                        <Link href="/">Home</Link>
                     </li>
                     <li>
-                        <link href="/about">About</link>
+                        <Link href="/about">About</Link>
                     </li>
                 </ul>
 
-                <link href="/" className="navbar-logo">
-                    <img src="my-portfolio/public/Logo_jem2.0_.svg" alt="jem-logo"></img>
-                </link>
+                <Link className="navbar-logo">
+                    <img src="/Logo/Logo_jem2.0_.svg" alt="jem-logo"></img>
+                </Link>
 
-                <ul>
+                <ul className="nav-right">
                     <li>
-                        <link href="/project">Project</link>
+                        <Link href="/project">Project</Link>
                     </li>
                     <li>
-                        <link href="/contact">Contact</link>
+                        <Link href="/contact">Contact</Link>
                     </li>
                 </ul>
-            </div>       
+            </div>
         </nav>
-    )
+    );
 }
