@@ -1,46 +1,62 @@
-#intro-video {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 9999;
-    overflow: hidden;
+.introVideo {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  overflow: hidden;
 }
 
-/* BOTH HALVES */
+/* BOTH PANELS */
 .half {
-    position: absolute;
-    top: 0;
-    width: 50%;
-    height: 100%;
-    overflow: hidden;
-    transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+
+  transition: transform 1.2s
+    cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-/* LEFT HALF */
+/* LEFT PANEL */
 .left {
-    left: 0;
+  left: 0;
 }
 
-/* RIGHT HALF */
+/* RIGHT PANEL */
 .right {
-    right: 0;
+  right: 0;
 }
 
-/* VIDEO SETTINGS */
-.split-video {
-    width: 200%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.1);
+/* FULL VIDEO */
+.splitVideo {
+  position: absolute;
+  top: 0;
+
+  width: 200%;
+  height: 100%;
+
+  object-fit: cover;
+
+  filter: brightness(0.1);
 }
 
 /* LEFT SIDE OF VIDEO */
-.left .split-video {
-    transform: translateX(0);
+.leftVideo {
+  left: 0;
 }
 
 /* RIGHT SIDE OF VIDEO */
-.right .split-video {
-    transform: translateX(-50%);
+.rightVideo {
+  left: -100%;
+}
+
+/* OUTRO */
+.closingLeft {
+  transform: translateX(-100%);
+}
+
+.closingRight {
+  transform: translateX(100%);
 }
