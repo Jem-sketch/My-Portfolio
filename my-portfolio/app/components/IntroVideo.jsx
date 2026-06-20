@@ -10,6 +10,10 @@ export default function IntroVideo() {
   const leftVideoRef = useRef(null);
   const rightVideoRef = useRef(null);
 
+  const handleVideoEND = () => {
+    document.body.classList.add("IntroDONE");
+  };
+
   useEffect(() => {
     const hasSeenIntro = sessionStorage.getItem("introSeen");
 
@@ -103,6 +107,7 @@ export default function IntroVideo() {
           className={`${styles.splitVideo} ${styles.leftVideo}`}
           muted
           playsInline
+          onEnded={handleVideoEND}
         >
           <source
             src="/finalize-logo-animate.mp4"
@@ -122,6 +127,7 @@ export default function IntroVideo() {
           className={`${styles.splitVideo} ${styles.rightVideo}`}
           muted
           playsInline
+          onEnded={handleVideoEND}
         >
           <source
             src="/finalize-logo-animate.mp4"

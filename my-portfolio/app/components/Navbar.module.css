@@ -4,38 +4,69 @@
     top: 0;
     z-index: 10000;
     background: transparent;
+    opacity: 0;
+    pointer-events: none;
 }
 
-/* Container */
+:global(body.IntroDONE) .navbar {
+    opacity: 1;
+    pointer-events: auto;
+    animation: navbarFadeDown 2s ease forwards;
+}
+
+@keyframes navbarFadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================== 
+   CONTAINER 
+========================== */
 .navbarContainer {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 25px;
+    width: 90%;
+    max-width: 860px;
+
+    margin: 20px auto 0;
+    padding: 1px;
+
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 999px;
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.253),
+        0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-/* NAV LISTS */
+/* ==========================
+   NAV LISTS
+========================== */
 .navLeft,
 .navRight {
     list-style: none;
     display: flex;
     gap: 10px;
     margin: 0;
-    padding: 20px 80px;
+    padding: 8px 80px;
     flex: 1;
 
-    /* FIX: visible by default */
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-
     transform: translateY(0);
 }
 
-/* alignment */
 .navLeft {
     justify-content: flex-end;
 }
@@ -44,32 +75,37 @@
     justify-content: flex-start;
 }
 
-/* LINKS */
+/* ==========================
+   LINKS
+========================== */
 .navLeft a,
 .navRight a {
     text-decoration: none;
     color: black;
     font-weight: 500;
-    padding: 15px 10px;
+    font-size: 15px;
+    padding: 12px 10px;
     display: block;
     cursor: pointer;
+    white-space: nowrap;
     transition: color 0.3s ease;
 }
 
-/* hover */
 .navLeft a:hover,
 .navRight a:hover {
     color: #464646;
     text-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
 }
 
-/* LOGO */
+/* ==========================
+   LOGO
+========================== */
 .navbarLogo {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10005;
-    mix-blend-mode: difference;
+    flex-shrink: 0;
 }
 
 .navbarLogo img {
@@ -79,7 +115,6 @@
     cursor: pointer;
 }
 
-/* ANIMATION */
 @keyframes logoIn {
     from {
         opacity: 0;
@@ -96,40 +131,157 @@
 }
 
 /* ==========================
-   TABLET
+   PC — 1440px+
 ========================== */
-@media (max-width: 1024px) {
+@media (min-width: 1440px) {
+    .navbarContainer {
+        max-width: 1000px;
+    }
+
     .navLeft,
     .navRight {
-        padding: 20px;
-        gap: 5px;
+        padding: 8px 100px;
+        gap: 14px;
+    }
+
+    .navLeft a,
+    .navRight a {
+        font-size: 16px;
+        padding: 14px 12px;
+    }
+
+    .navbarLogo img {
+        width: 65px;
+    }
+}
+
+/* ==========================
+   LAPTOP — 1024px to 1439px
+========================== */
+@media (max-width: 1439px) and (min-width: 1025px) {
+    .navbarContainer {
+        max-width: 860px;
+    }
+
+    .navLeft,
+    .navRight {
+        padding: 8px 70px;
+        gap: 8px;
     }
 
     .navLeft a,
     .navRight a {
         font-size: 14px;
+        padding: 12px 8px;
     }
 
     .navbarLogo img {
-        width: 50px;
+        width: 55px;
     }
 }
 
 /* ==========================
-   MOBILE
+   TABLET — 768px to 1024px
+========================== */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .navbarContainer {
+        width: 94%;
+        max-width: 700px;
+    }
+
+    .navLeft,
+    .navRight {
+        padding: 6px 30px;
+        gap: 4px;
+    }
+
+    .navLeft a,
+    .navRight a {
+        font-size: 13px;
+        padding: 10px 6px;
+    }
+
+    .navbarLogo img {
+        width: 48px;
+    }
+}
+
+/* ==========================
+   MOBILE — below 768px
 ========================== */
 @media (max-width: 768px) {
     .navbarContainer {
+        width: 92%;
+        border-radius: 999px;
         justify-content: space-between;
-        padding: 15px 20px;
+        padding: 6px 16px;
+        margin: 8px auto 0;
+    }
+
+    .navLeft,
+    .navRight {
+        padding: 0;
+        gap: 2px;
+        flex: unset;
+    }
+
+    .navLeft {
+        justify-content: flex-start;
+    }
+
+    .navRight {
+        justify-content: flex-end;
+    }
+
+    .navLeft a,
+    .navRight a {
+        font-size: 12px;
+        padding: 8px 5px;
     }
 
     .navbarLogo {
         position: static;
         transform: none;
+        z-index: auto;
     }
 
     .navbarLogo img {
-        width: 45px;
+        width: 40px;
+    }
+
+    /* reset logoAnim since position is no longer absolute */
+    .logoAnim {
+        animation: logoInMobile 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    @keyframes logoInMobile {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+/* ==========================
+   SMALL MOBILE — below 400px
+========================== */
+@media (max-width: 400px) {
+    .navbarContainer {
+        width: 96%;
+        padding: 4px 10px;
+    }
+
+    .navLeft a,
+    .navRight a {
+        font-size: 11px;
+        padding: 6px 4px;
+    }
+
+    .navbarLogo img {
+        width: 34px;
     }
 }
