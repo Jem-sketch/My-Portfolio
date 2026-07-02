@@ -25,10 +25,9 @@ export default function IntroVideo() {
 
       document.body.style.overflow = "hidden";
 
-      const videos = [
-        leftVideoRef.current,
-        rightVideoRef.current,
-      ];
+      const leftVideo = leftVideoRef.current;
+      const rightVideo = rightVideoRef.current;
+      const videos = [leftVideo, rightVideo];
 
       Promise.all(
         videos.map(
@@ -75,17 +74,12 @@ export default function IntroVideo() {
         }, 1200);
       };
 
-      leftVideoRef.current?.addEventListener(
-        "ended",
-        handleEnd
-      );
+      leftVideo?.addEventListener("ended", handleEnd);
 
       return () => {
-        leftVideoRef.current?.removeEventListener(
-          "ended",
-          handleEnd
-        );
+        leftVideo?.removeEventListener("ended", handleEnd);
       };
+
     } else {
       setShowIntro(false);
       document.body.style.overflow = "auto";

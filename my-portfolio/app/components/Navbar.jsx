@@ -9,6 +9,7 @@ export default function Navbar() {
     const navbarRef = useRef(null);
     const logoRef = useRef(null);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [menuHover, setMenuHover] = useState(false);
 
     const handleLogoClick = (e) => {
         const isMobile = window.innerWidth <= 768;
@@ -34,11 +35,19 @@ export default function Navbar() {
         return () => document.removeEventListener("click", handleClickOutside);
     }, [menuOpen]);
 
+
+
+    const showLinks = menuHover || menuOpen;
+
     return (
         <nav className={styles.navbar}>
-            <div className={styles.navbarContainer}>
+            <div 
+                className={`${styles.navbarContainer} ${showLinks ? styles.expanded : ""}`}
+                onMouseEnter={() => setMenuHover(true)}
+                onMouseLeave={() => setMenuHover(false)}
+            >
 
-                <ul className={styles.navLeft}>
+                <ul className={`${styles.navLeft} ${showLinks ? styles.visible : ""}`}>
                     <li>
                         <Link href="/" data-cursor="hover">Home</Link>
                     </li>
@@ -51,7 +60,7 @@ export default function Navbar() {
                     <img src="/Logo_jem2.0_.svg" alt="jem-logo" />
                 </Link>
 
-                <ul className={styles.navRight}>
+                <ul className={`${styles.navRight} ${showLinks ? styles.visible : ""}`}>
                     <li>
                         <Link href="/project" data-cursor="hover">Project</Link>
                     </li>

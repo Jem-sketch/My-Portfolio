@@ -1,68 +1,73 @@
-.navbar {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 10000;
-    background: transparent;
-    opacity: 0;
-    pointer-events: none;
-}
-
-:global(body.IntroDONE) .navbar {
-    opacity: 1;
-    pointer-events: auto;
-    animation: navbarFadeDown 2s ease forwards;
-}
-
-@keyframes navbarFadeDown {
-    from {
-        opacity: 0;
-        transform: translateY(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ========================== 
-   CONTAINER 
+/* ==========================
+   CONTAINER
 ========================== */
 .navbarContainer {
-    width: 90%;
-    max-width: 860px;
+    box-sizing: border-box;
+    width: min(40%, 900px);
+    margin: 20px auto 20px;
+    padding: 7px 25px;
 
-    margin: 20px auto 0;
-    padding: 1px;
+    gap: 20px;
 
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    position: relative;
 
-    background: #ffffff;
+    background: #fff;
     border: 1px solid #e5e5e5;
     border-radius: 999px;
 
     box-shadow:
         0 8px 20px rgba(0, 0, 0, 0.253),
         0 2px 4px rgba(0, 0, 0, 0.04);
+
+    position: relative;
 }
 
+.navbarContainer::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 999px;
+    border: 1px solid #e5e5e5;
+    pointer-events: none;
+
+    /* Default: border fully hidden (collapsed to center) */
+    clip-path: inset(0 50% 0 50% round 999px);
+    opacity: 0;
+    transition:
+        clip-path 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.45s ease;
+}
+ 
+/* On hover: border spreads outward from center, fades in */
+.navbarContainer.expanded::before {
+    clip-path: inset(0 0% 0 0% round 999px);
+    opacity: 1;
+}
 /* ==========================
-   NAV LISTS
+   NAV MENUS
 ========================== */
 .navLeft,
 .navRight {
     list-style: none;
     display: flex;
-    gap: 10px;
+    gap: 12px;
     margin: 0;
-    padding: 8px 80px;
-    flex: 1;
+    padding: 0;
+    position: sp;
 
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(4px);
+    transition: 
+        opacity 0.35s ease,
+        transform 0.35s ease;
+}
+
+.navLeft.visible,
+.navRight.visible{
     opacity: 1;
-    visibility: visible;
     pointer-events: auto;
     transform: translateY(0);
 }
@@ -82,97 +87,38 @@
 .navRight a {
     text-decoration: none;
     color: black;
-    font-weight: 500;
     font-size: 15px;
-    padding: 12px 10px;
-    display: block;
-    cursor: pointer;
+    font-weight: 500;
+    padding: 10px 12px;
     white-space: nowrap;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .navLeft a:hover,
 .navRight a:hover {
-    color: #464646;
-    text-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+    color: #555;
 }
 
 /* ==========================
    LOGO
 ========================== */
 .navbarLogo {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10005;
-    flex-shrink: 0;
+    position: static; /* removed absolute */
+    justify-self: center;
 }
 
 .navbarLogo img {
     width: 60px;
     height: auto;
     display: block;
-    cursor: pointer;
-}
-
-@keyframes logoIn {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -20px);
-    }
-    to {
-        opacity: 1;
-        transform: translate(-50%, 0);
-    }
-}
-
-.logoAnim {
-    animation: logoIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
 /* ==========================
-   PC — 1440px+
+   LAPTOP
 ========================== */
-@media (min-width: 1440px) {
+@media (max-width: 1200px) {
     .navbarContainer {
-        max-width: 1000px;
-    }
-
-    .navLeft,
-    .navRight {
-        padding: 8px 100px;
-        gap: 14px;
-    }
-
-    .navLeft a,
-    .navRight a {
-        font-size: 16px;
-        padding: 14px 12px;
-    }
-
-    .navbarLogo img {
-        width: 65px;
-    }
-}
-
-/* ==========================
-   LAPTOP — 1024px to 1439px
-========================== */
-@media (max-width: 1439px) and (min-width: 1025px) {
-    .navbarContainer {
-        max-width: 860px;
-    }
-
-    .navLeft,
-    .navRight {
-        padding: 8px 70px;
-        gap: 8px;
-    }
-
-    .navLeft a,
-    .navRight a {
-        font-size: 14px;
-        padding: 12px 8px;
+        width: min(40%, 800px);
     }
 
     .navbarLogo img {
@@ -181,107 +127,75 @@
 }
 
 /* ==========================
-   TABLET — 768px to 1024px
+   TABLET
 ========================== */
-@media (max-width: 1024px) and (min-width: 769px) {
+@media (max-width: 1024px) {
+
     .navbarContainer {
-        width: 94%;
-        max-width: 700px;
+        width: min(60%, 700px);
+        padding: 10px 20px;
     }
 
     .navLeft,
     .navRight {
-        padding: 6px 30px;
+        gap: 8px;
+    }
+
+    .navLeft a,
+    .navRight a {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+
+    .navbarLogo img {
+        width: 50px;
+    }
+}
+
+/* ==========================
+   MOBILE
+========================== */
+@media (max-width: 768px) {
+
+    .navbarContainer {
+        width: 60%;
+        padding: 10px 16px;
+        grid-template-columns: 1fr auto 1fr;
+    }
+
+    .navLeft,
+    .navRight {
         gap: 4px;
     }
 
     .navLeft a,
     .navRight a {
-        font-size: 13px;
-        padding: 10px 6px;
-    }
-
-    .navbarLogo img {
-        width: 48px;
-    }
-}
-
-/* ==========================
-   MOBILE — below 768px
-========================== */
-@media (max-width: 768px) {
-    .navbarContainer {
-        width: 92%;
-        border-radius: 999px;
-        justify-content: space-between;
-        padding: 6px 16px;
-        margin: 8px auto 0;
-    }
-
-    .navLeft,
-    .navRight {
-        padding: 0;
-        gap: 2px;
-        flex: unset;
-    }
-
-    .navLeft {
-        justify-content: flex-start;
-    }
-
-    .navRight {
-        justify-content: flex-end;
-    }
-
-    .navLeft a,
-    .navRight a {
         font-size: 12px;
-        padding: 8px 5px;
-    }
-
-    .navbarLogo {
-        position: static;
-        transform: none;
-        z-index: auto;
+        padding: 6px 6px;
     }
 
     .navbarLogo img {
-        width: 40px;
-    }
-
-    /* reset logoAnim since position is no longer absolute */
-    .logoAnim {
-        animation: logoInMobile 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    @keyframes logoInMobile {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        width: 42px;
     }
 }
 
 /* ==========================
-   SMALL MOBILE — below 400px
+   VERY SMALL MOBILE
 ========================== */
-@media (max-width: 400px) {
+@media (max-width: 480px) {
+
     .navbarContainer {
-        width: 96%;
-        padding: 4px 10px;
+        width: 80%;
+        padding: 8px 10px;
     }
 
     .navLeft a,
     .navRight a {
         font-size: 11px;
-        padding: 6px 4px;
+        padding: 4px;
     }
 
     .navbarLogo img {
-        width: 34px;
+        width: 36px;
     }
 }
