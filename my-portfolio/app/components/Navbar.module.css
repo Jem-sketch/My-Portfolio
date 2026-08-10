@@ -38,7 +38,7 @@
     transition:
         clip-path 0.45s cubic-bezier(0.4, 0, 0.2, 1),
         opacity 0.45s ease;
-    z-index: -9999;
+    z-index: 9999;
 }
 
 /* On hover: border spreads outward from center, fades in */

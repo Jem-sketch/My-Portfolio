@@ -2,8 +2,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import IntroVideo from "./components/IntroVideo";
-import CursorRing from "./components/CursorRing";
 import Navbar from "./components/Navbar";
+import GridTail from "./components/GridTail";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +31,7 @@ export default function RootLayout({ children }) {
       <body>
         <IntroVideo />
         <Navbar />
+        <GridTail />
 
         <main>
           {children}
