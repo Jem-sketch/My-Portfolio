@@ -30,7 +30,6 @@ export default function RootLayout({ children }) {
       
       <body>
         <IntroVideo />
-        <CursorRing />
         <Navbar />
 
         <main>

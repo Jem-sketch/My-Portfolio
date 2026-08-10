@@ -1,9 +1,10 @@
 
+
 /*==== REUSABLE VARIABLE CSS ====*/
 
 :root{
-  --background: white;
-  --foreground: black;
+  --background: rgb(15, 15, 15);
+  --foreground: #e8e8ea;
 }
 
 @media(prefers-color-scheme: light){
