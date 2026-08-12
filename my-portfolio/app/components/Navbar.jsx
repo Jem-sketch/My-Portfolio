@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -7,26 +6,37 @@ import styles from "./Navbar.module.css";
 
 export default function Navbar() {
     const navbarRef = useRef(null);
-    const logoRef = useRef(null);
     const [menuOpen, setMenuOpen] = useState(false);
     const [menuHover, setMenuHover] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
+    const lastScrollY = useRef(0);
 
-    const handleLogoClick = (e) => {
-        const isMobile = window.innerWidth <= 768;
-        if (isMobile) {
-            e.preventDefault();;
-            setMenuOpen((prev) => !prev);
-        }else{
-            window.location.href = "/";
-        }
-    };
+    // Scroll direction tracking for hide/show on scroll
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
 
+            if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
+                // Scrolling down -> hide navbar
+                setIsVisible(false);
+            } else {
+                // Scrolling up -> show navbar
+                setIsVisible(true);
+            }
+            lastScrollY.current = currentScrollY;
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    // Click outside handler (fixed current typo to contains)
     useEffect(() => {
         const handleClickOutside = (e) => {
-            if(
+            if (
                 menuOpen &&
                 navbarRef.current &&
-                !navbarRef.current.contain(e.target)
+                !navbarRef.current.contains(e.target)
             ) {
                 setMenuOpen(false);
             }
@@ -35,18 +45,15 @@ export default function Navbar() {
         return () => document.removeEventListener("click", handleClickOutside);
     }, [menuOpen]);
 
-
-
     const showLinks = menuHover || menuOpen;
 
     return (
-        <nav className={styles.navbar}>
+        <nav ref={navbarRef} className={`${styles.navbar} ${isVisible ? styles.show : styles.hide}`}>
             <div 
                 className={`${styles.navbarContainer} ${showLinks ? styles.expanded : ""}`}
                 onMouseEnter={() => setMenuHover(true)}
                 onMouseLeave={() => setMenuHover(false)}
             >
-
                 <ul className={`${styles.navLeft} ${showLinks ? styles.visible : ""}`}>
                     <li>
                         <Link href="/" data-cursor="hover">Home</Link>
@@ -68,7 +75,6 @@ export default function Navbar() {
                         <Link href="/contact" data-cursor="hover">Contact</Link>
                     </li>
                 </ul>
-
             </div>
         </nav>
     );

@@ -9,7 +9,6 @@ const COLOR_R = 255;
 const COLOR_G = 255;
 const COLOR_B = 255;
 const STARTING_ALPHA = 255;
-const BACKGROUND_COLOR = 31;
 const PROB_OF_NEIGHBOR = 0.5;
 const AMT_FADE_PER_FRAME = 5;
 const STROKE_WEIGHT = 1;
@@ -71,7 +70,6 @@ export default function GridTail() {
     };
 
     const render = () => {
-      ctx.fillStyle = `rgb(${BACKGROUND_COLOR}, ${BACKGROUND_COLOR}, ${BACKGROUND_COLOR})`;
       ctx.fillRect(0, 0, width, height);
 
       ctx.lineWidth = STROKE_WEIGHT;

@@ -1,0 +1,31 @@
+/* home.module.css */
+
+.container {
+    position: relative;
+    overflow: hidden;
+    height: 100dvh;
+
+
+    /* Base Grid matching CELL_SIZE = 40 */
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+
+    /* Fades the edges of the grid into a circle shape */
+    -webkit-mask-image: radial-gradient(circle, black 40%, transparent 80%);
+    mask-image: radial-gradient(circle, black 10%, transparent 50%);
+}
+
+.canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allows clicks to pass through if needed */
+}
+
+.aboutPreview{
+    height: 100dvh;
+}
