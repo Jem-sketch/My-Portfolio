@@ -6,111 +6,126 @@ import styles from "./IntroVideo.module.css";
 export default function IntroVideo() {
   const [showIntro, setShowIntro] = useState(true);
   const [closingIntro, setClosingIntro] = useState(false);
+  const [videoBright, setVideoBright] = useState(false);
 
+  const closingRef = useRef(false);
+  const removeTimerRef = useRef(null);
+  
+  // Re-added the video refs so we can pause them
   const leftVideoRef = useRef(null);
   const rightVideoRef = useRef(null);
 
-  const handleVideoEND = () => {
-    document.body.classList.add("IntroDONE");
-  };
-
   useEffect(() => {
-    const hasSeenIntro = sessionStorage.getItem("introSeen");
+    const lockScroll = () => {
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+    };
 
-    const navType =
-      performance.getEntriesByType("navigation")[0]?.type;
+    const unlockScroll = () => {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    };
+
+    const hasSeenIntro = sessionStorage.getItem("introSeen");
+    const navigation = performance.getEntriesByType("navigation")[0];
+    const navType = navigation?.type;
 
     if (navType === "reload" || !hasSeenIntro) {
       sessionStorage.setItem("introSeen", "true");
+      lockScroll();
 
-      document.body.style.overflow = "hidden";
-
-      const leftVideo = leftVideoRef.current;
-      const rightVideo = rightVideoRef.current;
-      const videos = [leftVideo, rightVideo];
-
-      Promise.all(
-        videos.map(
-          (video) =>
-            new Promise((resolve) => {
-              if (!video) return resolve();
-
-              if (video.readyState >= 3) {
-                resolve();
-              } else {
-                video.oncanplaythrough = resolve;
-              }
-            })
-        )
-      ).then(() => {
-        videos.forEach((video) => {
-          if (!video) return;
-
-          video.muted = true;
-          video.play().catch(console.error);
-
-          video.style.filter = "brightness(0.4)";
-          video.playbackRate = 1.5;
-        });
-
-        setTimeout(() => {
-          videos.forEach((video) => {
-            if (!video) return;
-
-            video.style.transition = "filter 1s ease";
-            video.style.filter =
-              "brightness(1) contrast(1.3)";
-          });
-        }, 2500);
-      });
-
-      const handleEnd = () => {
-        /* Start sliding door outro */
-        setClosingIntro(true);
-
-        setTimeout(() => {
-          setShowIntro(false);
-          document.body.style.overflow = "auto";
-        }, 1200);
-      };
-
-      leftVideo?.addEventListener("ended", handleEnd);
+      const brightTimer = setTimeout(() => {
+        setVideoBright(true);
+      }, 2500);
 
       return () => {
-        leftVideo?.removeEventListener("ended", handleEnd);
+        clearTimeout(brightTimer);
+        unlockScroll();
       };
-
-    } else {
-      setShowIntro(false);
-      document.body.style.overflow = "auto";
     }
+
+    setShowIntro(false);
+    unlockScroll();
+  }, []);
+
+  const closeIntro = () => {
+    if (closingRef.current) return;
+    closingRef.current = true;
+
+    // FREEZE THE VIDEO: Prevents the video from finishing and turning black 
+    // before the 1.2s CSS sliding animation completes
+    if (leftVideoRef.current) leftVideoRef.current.pause();
+    if (rightVideoRef.current) rightVideoRef.current.pause();
+
+    // Start CSS closing animation
+    setClosingIntro(true);
+
+    removeTimerRef.current = setTimeout(() => {
+      setShowIntro(false);
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    }, 1200);
+  };
+
+  const handleVideoEnd = () => {
+    closeIntro();
+  };
+
+  const handleTimeUpdate = (event) => {
+    const video = event.currentTarget;
+    if (!Number.isFinite(video.duration)) return;
+
+    const remaining = video.duration - video.currentTime;
+
+    if (remaining <= 0.15) {
+      closeIntro();
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (removeTimerRef.current) {
+        clearTimeout(removeTimerRef.current);
+      }
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    };
   }, []);
 
   if (!showIntro) return null;
 
   return (
-    <div className={styles.introVideo}>
-      {/* LEFT HALF */}
+    <div
+      className={`${styles.introVideo} ${
+        closingIntro ? styles.closing : ""
+      }`}
+    >
+      <div
+        className={styles.blackOverlay}
+        style={{ opacity: videoBright ? 0 : 0.6 }}
+      />
+
+      {/* LEFT */}
       <div
         className={`${styles.half} ${styles.left} ${
           closingIntro ? styles.closingLeft : ""
         }`}
       >
         <video
-          ref={leftVideoRef}
+          ref={leftVideoRef} 
           className={`${styles.splitVideo} ${styles.leftVideo}`}
           muted
           playsInline
-          onEnded={handleVideoEND}
+          autoPlay
+          preload="auto"
+          onEnded={handleVideoEnd}
+          onTimeUpdate={handleTimeUpdate}
         >
-          <source
-            src="/finalize-logo-animate.mp4"
-            type="video/mp4"
-          />
+          <source src="/finalize-logo-animate.mp4" type="video/mp4" />
         </video>
       </div>
 
-      {/* RIGHT HALF */}
+      {/* RIGHT */}
       <div
         className={`${styles.half} ${styles.right} ${
           closingIntro ? styles.closingRight : ""
@@ -121,12 +136,12 @@ export default function IntroVideo() {
           className={`${styles.splitVideo} ${styles.rightVideo}`}
           muted
           playsInline
-          onEnded={handleVideoEND}
+          autoPlay
+          preload="auto"
+          onEnded={handleVideoEnd}
+          onTimeUpdate={handleTimeUpdate}
         >
-          <source
-            src="/finalize-logo-animate.mp4"
-            type="video/mp4"
-          />
+          <source src="/finalize-logo-animate.mp4" type="video/mp4" />
         </video>
       </div>
     </div>

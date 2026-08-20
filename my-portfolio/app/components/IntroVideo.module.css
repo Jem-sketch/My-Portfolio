@@ -1,3 +1,4 @@
+
 .introVideo {
   position: fixed;
   inset: 0;
@@ -5,6 +6,7 @@
   height: 100vh;
   z-index: 999999;
   overflow: hidden;
+  background-color: black;
 }
 
 /* BOTH PANELS */
@@ -38,8 +40,16 @@
   height: 100%;
 
   object-fit: cover;
+  transform: scale(0.85);
+}
 
-  filter: brightness(0.1);
+/* Add this anywhere in your module.css file */
+.blackOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: black;
+  pointer-events: none; /* Lets clicks pass through to the video if needed */
+  transition: opacity 1s ease; /* This handles the smooth fade */
 }
 
 /* LEFT SIDE OF VIDEO */

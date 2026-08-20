@@ -3,7 +3,7 @@ import "./globals.css";
 
 import IntroVideo from "./components/IntroVideo";
 import Navbar from "./components/Navbar";
-import GridTail from "./components/GridTail";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
       <body>
         <IntroVideo />
         <Navbar />
-        <GridTail />
+        
 
         <main>
           {children}

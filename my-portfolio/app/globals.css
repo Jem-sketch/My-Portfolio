@@ -1,62 +1,72 @@
+/* ==== REUSABLE VARIABLE CSS ==== */
 
-
-/*==== REUSABLE VARIABLE CSS ====*/
-
-:root{
-  --background: rgb(15, 15, 15);
-  --foreground: #e8e8ea;
+:root {
+    --background: rgb(15, 15, 15);
+    --foreground: #e8e8ea;
 }
 
-@media(prefers-color-scheme: light){
-  :root{
-    --background: white;
-    --foreground: black;
-  }
-}
-/*================================*/
-
-*{
-  outline: 1px solid rgba(255, 0, 0, 0);
+@media (prefers-color-scheme: light) {
+    :root {
+        --background: white;
+        --foreground: black;
+    }
 }
 
-html.lenis, html.lenis body {
-  height: auto;
+/* ================================ */
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* DEBUG OUTLINE */
+* {
+    outline: 1px solid rgba(255, 0, 0, 0.267) !important;
+}
+
+html.lenis,
+html.lenis body {
+    height: auto;
 }
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+
+    overscroll-behavior-y: none;
+    scrollbar-width: none;
 }
 
-body{
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  background: var(--background);
-  color: var(--foreground);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    background: var(--background);
+    color: var(--foreground);
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-
-.lenis.lenis-smooth{
-  scroll-behavior: auto !important;
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
 }
 
-.lenis.lenis-smooth [data-lenis-prevent]{
-  overscroll-behavior: contain;
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
 }
-
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+    html {
+        color-scheme: dark;
+    }
 }

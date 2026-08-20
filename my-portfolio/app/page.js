@@ -1,10 +1,13 @@
-import Image from "next/image";
+
 import styles from "./home.module.css";
+import GridTail from "./components/GridTail";
+
 
 export default function Home() {
   return(
     <div className={styles.page}>
       <main className={styles.main}>
+        <GridTail />
         
         {/* Use styles.heroGrid from your CSS module */}
         <section className={styles.container}>
@@ -12,7 +15,7 @@ export default function Home() {
         </section>
 
         <section className={styles.aboutPreview}>
-          <h1>Hello</h1>
+          <h1>hello World</h1>
         </section>
 
       </main>
