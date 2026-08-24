@@ -8,12 +8,12 @@
 
     background-image:
         linear-gradient(
-            rgba(255, 255, 255, 0.05) 1px,
+            rgba(255, 255, 255, 0.135) 1px,
             transparent 1px
         ),
         linear-gradient(
             90deg,
-            rgba(255, 255, 255, 0.05) 1px,
+            rgba(255, 255, 255, 0.135) 1px,
             transparent 1px
         );
 
@@ -48,7 +48,7 @@
 
     min-height: 100vh;
 
-    background-color: rgb(68, 68, 68);
+    background-color: #000000;
 }
 
 
