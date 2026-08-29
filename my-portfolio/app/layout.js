@@ -3,6 +3,7 @@ import "./globals.css";
 
 import IntroVideo from "./components/IntroVideo";
 import Navbar from "./components/Navbar";
+import { ThemeProvider } from "./context/ThemeContext";
 
 
 const geistSans = Geist({
@@ -30,13 +31,14 @@ export default function RootLayout({ children }) {
       
       <body>
         <IntroVideo />
+        <ThemeProvider>
         <Navbar />
         
 
         <main>
           {children}
         </main>
-        
+        </ThemeProvider>
       </body>
     </html>
   );
