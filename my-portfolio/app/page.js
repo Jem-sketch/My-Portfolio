@@ -34,7 +34,11 @@ function HomeContent() {
           className={styles.themeButton}
           onClick={toggleTheme}
         >
-          {darkmode ? "☀️" : "🌙"}
+          <img 
+          src={darkmode ? "/icon-sun.png" : "/icon-moon.png"}
+          alt={darkmode ? "Light-Mode" : "Dark-Mode"}
+          className={styles.themeIcon}
+          />
         </button>
 
         <section className={styles.container}>
