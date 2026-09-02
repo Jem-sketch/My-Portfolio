@@ -81,13 +81,15 @@ export default function Navbar() {
         isVisible ? styles.show : styles.hide
       }`}
     >
-      <div
-        className={`${styles.navbarContainer} ${
-          showLinks ? styles.expanded : ""
-        }`}
-        onMouseEnter={() => setMenuHover(true)}
-        onMouseLeave={() => setMenuHover(false)}
-      >
+        <div
+          className={`${styles.navbarContainer} ${
+            darkmode ? styles.dark : styles.light
+          } ${
+            showLinks ? styles.expanded : ""
+          }`}
+          onMouseEnter={() => setMenuHover(true)}
+          onMouseLeave={() => setMenuHover(false)}
+        >
         {/* LEFT LINKS */}
 
         <ul

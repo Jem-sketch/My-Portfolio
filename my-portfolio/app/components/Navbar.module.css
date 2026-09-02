@@ -29,62 +29,73 @@
    NAVBAR CONTAINER
 ========================== */
 .navbarContainer {
-    pointer-events: auto;
-    box-sizing: border-box;
+  pointer-events: auto;
+  box-sizing: border-box;
 
-    width: min(40%, 900px);
-    margin: 20px auto 0;
-    padding: 7px 25px;
+  width: min(40%, 900px);
+  margin: 20px auto 0;
+  padding: 7px 25px;
 
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
 
-    position: relative;
-    isolation: isolate;
+  position: relative;
+  isolation: isolate;
 
-    border-radius: 999px;
-
-    z-index: 100;
+  border-radius: 999px;
+  z-index: 100;
 }
-
 
 .navbarContainer::before {
-    content: "";
+  content: "";
 
-    position: absolute;
-    inset: 0;
+  position: absolute;
+  inset: 0;
 
-    border-radius: inherit;
+  border-radius: inherit;
 
-    background: rgba(90, 90, 90, 0.28);
+  pointer-events: none;
 
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: center;
 
-    border: 1px solid rgba(255, 255, 255, 0.15);
+  transition:
+    transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease;
 
-    box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  will-change: transform, opacity;
 
-    pointer-events: none;
-
-    opacity: 0;
-    transform: scaleX(0);
-
-    transform-origin: center;
-
-    transition:
-        transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-        opacity 0.3s ease;
-
-    will-change: transform, opacity;
-
-    z-index: -1;
+  z-index: -1;
 }
 
+.navbarContainer.dark::before {
+  background: rgba(0, 0, 0, 0.616);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+.navbarContainer.light::before {
+  background: rgba(255, 255, 255, 0.712);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(0, 0, 0, 0.342);
+
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+}
 
 .navbarContainer.expanded::before {
     opacity: 1;

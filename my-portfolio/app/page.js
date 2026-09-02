@@ -44,8 +44,36 @@ function HomeContent() {
         <section className={styles.container}>
           <GridTail />
 
-          <div className={styles.content}>
-            <h1></h1>
+          <div className={`${styles.profile} ${darkmode ? styles.dark : styles.light}`}>
+            <img src="/sample.jpg" alt="profile-image" className={styles.profile_image}></img>
+            
+            <div className={styles.profile_description}>
+              <h1>JEM</h1>
+              <p>Web Developer passionate about creating modern and interactive web experiences.</p>
+
+              <div className={styles.social_media}>
+                <a href="#" target="_blank" rel="noopener noreferrer"><img src="#" alt="facebook" className={styles.social_icon}></img></a>
+                <a href="#" target="_blank" rel="noopener noreferrer"><img src="#" alt="instagram" className={styles.social_icon}></img></a>
+                <a href="#" target="_blank" rel="noopener noreferrer"><img src="#" alt="telegram" className={styles.social_icon}></img></a>
+              </div>
+            </div>
+          </div>
+          
+          <div className={`${styles.statistical_container} ${darkmode ? styles.dark : styles.light}`}>
+              <div className={styles.stat}>
+                <h2>18+</h2>
+                <p>Project</p>
+              </div>
+
+              <div className={styles.stat}>
+                <h2>10+</h2>
+                <p>Project</p>
+              </div>
+
+              <div className={styles.stat}>
+                <h2>20+</h2>
+                <p>Project</p>
+              </div>
           </div>
         </section>
 
