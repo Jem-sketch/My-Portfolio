@@ -48,7 +48,7 @@ function HomeContent() {
             <img src="/sample.jpg" alt="profile-image" className={styles.profile_image}></img>
             
             <div className={styles.profile_description}>
-              <h1>JEM</h1>
+              <h1>Jem</h1>
               <p>Web Developer passionate about creating modern and interactive web experiences.</p>
 
               <div className={styles.social_media}>
@@ -61,18 +61,18 @@ function HomeContent() {
           
           <div className={`${styles.statistical_container} ${darkmode ? styles.dark : styles.light}`}>
               <div className={styles.stat}>
-                <h2>18+</h2>
+                <a href="#" target="_black" rel="noopener noreferrer"><h2>10+</h2></a>
                 <p>Project</p>
               </div>
 
               <div className={styles.stat}>
-                <h2>10+</h2>
-                <p>Project</p>
+                <a href="#" target="_black" rel="noopener noreferrer"><h2>7+</h2></a>
+                <p>Skills</p>
               </div>
 
               <div className={styles.stat}>
-                <h2>20+</h2>
-                <p>Project</p>
+                <a href="#" target="_black" rel="noopener noreferrer"><h2>20+</h2></a>
+                <p>Clients</p>
               </div>
           </div>
         </section>

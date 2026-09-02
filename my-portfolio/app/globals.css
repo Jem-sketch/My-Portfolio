@@ -1,5 +1,35 @@
-/* ==== REUSABLE VARIABLE CSS ==== */
+/* ================================ */
+/* ===== GOOGLE FONT IMPRORTS ===== */
+/* ================================ */
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
 
+.pixelify {
+    font-family: "Pixelify Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.press-start-2p-regular {
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+.syne{
+    font-family: "Syne", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+/* ================================ */
+
+
+
+
+/* ==== REUSABLE VARIABLE CSS ==== */
 :root {
     --background: rgb(15, 15, 15);
     --foreground: #e8e8ea;
@@ -11,6 +41,7 @@
         --foreground: black;
     }
 }
+/* ================================ */
 
 /* ================================ */
 
@@ -20,7 +51,7 @@
 
 /* DEBUG OUTLINE */
 * {
-    outline: 1px solid rgba(255, 0, 0, 0.247) !important;
+    outline: 1px solid rgba(255, 0, 0, 0) !important;
 }
 
 html.lenis,
