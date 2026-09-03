@@ -4,6 +4,7 @@ import "./globals.css";
 import IntroVideo from "./components/IntroVideo";
 import Navbar from "./components/Navbar";
 import { ThemeProvider } from "./context/ThemeContext";
+import Smoothscroll from "./components/smoothScroll";
 
 
 const geistSans = Geist({
@@ -33,6 +34,7 @@ export default function RootLayout({ children }) {
         <IntroVideo />
         <ThemeProvider>
         <Navbar />
+        <Smoothscroll />
         
 
         <main>
