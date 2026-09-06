@@ -1,9 +1,11 @@
-/* ================================ */
-/* ===== GOOGLE FONT IMPRORTS ===== */
-/* ================================ */
+
+
+/* GOOGLE FONT IMPORTS {black,4}*/
+
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
+
 
 .pixelify {
     font-family: "Pixelify Sans", sans-serif;
@@ -50,8 +52,9 @@
 }
 
 /* DEBUG OUTLINE */
+
 * {
-    outline: 1px solid rgba(255, 0, 0, 0) !important;
+    outline: 1px solid rgba(255, 0, 0, 0.349) !important;
 }
 
 html,

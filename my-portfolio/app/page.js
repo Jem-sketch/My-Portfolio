@@ -61,17 +61,17 @@ function HomeContent() {
           
           <div className={`${styles.statistical_container} ${darkmode ? styles.dark : styles.light}`}>
               <div className={styles.stat}>
-                <a href="#" target="_black" rel="noopener noreferrer"><h2>10+</h2></a>
+                <a href="Project"  rel="noopener noreferrer"><h2>15+</h2></a>
                 <p>Project</p>
               </div>
 
               <div className={styles.stat}>
-                <a href="#" target="_black" rel="noopener noreferrer"><h2>7+</h2></a>
+                <a href="Skills"  rel="noopener noreferrer"><h2>10+</h2></a>
                 <p>Skills</p>
               </div>
 
               <div className={styles.stat}>
-                <a href="#" target="_black" rel="noopener noreferrer"><h2>20+</h2></a>
+                <a href="Clients"  rel="noopener noreferrer"><h2>20+</h2></a>
                 <p>Clients</p>
               </div>
           </div>

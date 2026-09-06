@@ -117,9 +117,10 @@
   justify-content: center;
   border-radius: 30px;
 
-  margin-top: 70px;
-  padding: 30px;
-  gap: 40px;
+  /* Responsive spacing */
+  margin-top: clamp(30px, 5vw, 70px);
+  padding: clamp(15px, 3vw, 30px);
+  gap: clamp(15px, 3vw, 40px);
 
   z-index: 2;
 }
@@ -152,9 +153,12 @@
     inset 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
-.profile_image{
+.profile_image {
   height: auto;
-  width: 250px;
+
+  /* Responsive image size */
+  width: clamp(150px, 25vw, 250px);
+
   object-fit: cover;
   border-radius: 20px;
   z-index: 2;
@@ -164,106 +168,123 @@
   -webkit-user-select: none;
 }
 
-.profile_description{
+.profile_description {
   z-index: 2;
-  max-width: 400px;
-  
+
+  /* Responsive description width */
+  max-width: clamp(280px, 35vw, 400px);
+
   user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
 }
 
-.profile_description h1{
+.profile_description h1 {
   font-family: "Syne", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   font-weight: 900;
-  font-size: 48px;
-  letter-spacing: 30px;
+
+  /* Responsive text */
+  font-size: clamp(28px, 4vw, 48px);
+
+  /* Responsive letter spacing */
+  letter-spacing: clamp(5px, 2vw, 30px);
 
   text-align: center;
-
 
   user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
 }
 
-.profile_description p{
+.prof.profile_description p {
   font-family: "Syne", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   font-weight: 100;
-  font-size: 16px;
+
+  /* Responsive paragraph */
+  font-size: clamp(14px, 1.5vw, 16px);
+
+  line-height: 1.6;
 
   user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
 }
 
-
-.social_media{
+.social_media {
   display: flex;
-  gap: 40px;
+  gap: clamp(15px, 3vw, 40px);
   position: relative;
 }
 
 
-.statistical_container{
+.statistical_container {
   display: flex;
   justify-content: center;
 
-  margin-top: 20px;
-  gap: 60px;
-
+  margin-top: clamp(15px, 2vw, 20px);
+  gap: clamp(30px, 4vw, 60px);
 
   position: relative;
   z-index: 2;
-  padding: 10px 40px;
+
+  padding: 15px clamp(40px, 3vw, 40px);
   border-radius: 10px;
 }
 
-
-.stat{
+.stat {
   position: relative;
   text-align: center;
 }
 
-.stat:not(:first-child)::before{
+
+.stat:not(:first-child)::before {
   content: "";
   position: absolute;
 
-  left: -30px;
+  left: clamp(-50px, -2vw, -15px);
   top: 50%;
+
   transform: translateY(-50%);
 
   width: 1px;
-  height: 50px;
+  height: clamp(40px, 4vw, 50px);
+
   background-color: var(--text);
 }
 
-.stat a h2{
+.stat a h2 {
   font-family: "Syne", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
-  font-weight: 900;
-  font-size: 25px;
   font-weight: 10;
+
+  /* Responsive number */
+  font-size: clamp(25px, 2vw, 25px);
+
   margin: 5px;
 }
 
-.stat p{
+.stat p {
   font-family: "Syne", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   font-weight: 100;
-  letter-spacing: 2px;
+
+  /* Responsive label */
+  font-size: clamp(12px, 1.2vw, 16px);
+  letter-spacing: clamp(1px, 0.2vw, 2px);
+
   margin: 5px 0 0;
 
   user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
 }
+
 
 /* DARK MODE */
 .dark .statistical_container {
@@ -293,6 +314,85 @@
     inset 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
+/* ========================= */
+/* RESPONSIVE MEDIA */
+/* ========================= */
+
+/* TABLET */
+@media (max-width: 900px) {
+  .profile {
+    gap: 20px;
+    width: min(80%, 900px);
+  }
+
+  .profile_description h1 {
+    letter-spacing: 10px;
+  }
+}
+
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .profile {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile_image {
+    width: clamp(150px, 55vw, 220px);
+  }
+
+  .profile_description {
+    max-width: 80%;
+  }
+
+  .profile_description h1 {
+    font-size: clamp(24px, 8vw, 36px);
+    letter-spacing: clamp(3px, 1vw, 8px);
+  }
+
+  .profile_description p {
+    font-size: clamp(13px, 3.5vw, 16px);
+  }
+
+  .social_media {
+    padding: 15px;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .statistical_container {
+    margin-top: clamp(40px, 5vw, 30px);
+    gap: clamp(30px, 5vw, 30px);
+    padding: 15px 20px;
+    width: clamp(150px, 55vw, 220px);
+  }
+
+  .statistical_container p{
+    font-size: clamp(13px, 3.5vw, 16px);
+  }
+
+  .stat:not(:first-child)::before {
+    left: -15px;
+  }
+}
+
+
+/* SMALL MOBILE */
+@media (max-width: 400px) {
+  .profile {
+    padding: 15px;
+    gap: 20px;
+  }
+
+  .statistical_container {
+    gap: 12px;
+  }
+
+  .stat:not(:first-child)::before {
+    left: -8px;
+  }
+}
 
 
 
