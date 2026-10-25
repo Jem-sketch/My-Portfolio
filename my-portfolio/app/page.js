@@ -5,8 +5,8 @@ import styles from "./home.module.css";
 import GridTail from "./components/GridTail";
 import Navbar from "./components/Navbar";
 
-import {ThemeProvider,useTheme,} 
-from "./context/ThemeContext";
+import themeStyles from "./context/ThemeButton.module.css";
+import {ThemeProvider,useTheme,} from "./context/ThemeContext";
 
 
 export default function Home() {
@@ -30,16 +30,17 @@ function HomeContent() {
       <Navbar />
 
       <main>
-        <button
-          className={styles.themeButton}
-          onClick={toggleTheme}
-        >
-          <img 
+
+      <button
+        className={themeStyles.themeButton}
+        onClick={toggleTheme}
+      >
+        <img
           src={darkmode ? "/icon-sun.png" : "/icon-moon.png"}
           alt={darkmode ? "Light-Mode" : "Dark-Mode"}
-          className={styles.themeIcon}
-          />
-        </button>
+          className={themeStyles.themeIcon}
+        />
+      </button>
 
         <section className={styles.container}>
           <GridTail />
@@ -49,7 +50,7 @@ function HomeContent() {
             
             <div className={styles.profile_description}>
               <h1>Jem</h1>
-              <p>Web Developer passionate about creating modern and interactive web experiences.</p>
+              <p>Full-stack Web Developer passionate about creating modern and interactive web experiences.</p>
 
               <div className={styles.social_media}>
                 <a href="#" target="_blank" rel="noopener noreferrer"><img src="#" alt="facebook" className={styles.social_icon}></img></a>
@@ -78,8 +79,27 @@ function HomeContent() {
         </section>
 
         <section className={styles.aboutPreview}>
-          <h1>Hello World</h1>
+          <div className={styles.Experience_overview}>
+            <h1>Experience</h1>
+            <h4>Full-Stack Web Developer</h4>
+            <h4>UI/UX Designer</h4>
+            <h4>Graphic Designer Intern</h4>
+            <h4>Game Developer</h4>
+          </div>
+          
+          <br/>
+
+          <div className={styles.project_overview}>
+            <h1>Project</h1>
+          
+            <div className={styles.project01}>
+              <h3>Adventure Game | Academic Project</h3>
+            </div>
+
+          </div>
+
         </section>
+
       </main>
     </div>
   );

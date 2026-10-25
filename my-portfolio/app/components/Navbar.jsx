@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 import styles from "./Navbar.module.css";
+
 import { useTheme } from "../context/ThemeContext";
 
 export default function Navbar() {
