@@ -81,7 +81,7 @@ function HomeContent() {
           </div>
         </section>
 
-        <section className={styles.aboutPreview}>
+        <section className={styles.About_Preview}>
 
           {/* ========================= */}
           {/* EXPERIENCE */}
@@ -153,43 +153,78 @@ function HomeContent() {
           </div>
 
           <br/>
+        </section>
 
-          {/* ========================= */}
-          {/* PROJECTS */}
-          {/* ========================= */}
-          <div className={styles.project_overview}>
-            <h1>Project</h1>
 
-            {/* ----- Project 01: Adventure Games ----- */}
-            <div className={styles.project01}>
-              <div className={styles.project_Header}>
-                <span className={styles.project_Status}>
-                  <span className={styles.status_Dot}></span>
-                  Live
-                </span>
+        {/* ========================= */}
+        {/* PROJECTS */}
+        {/* ========================= */}
 
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.view_Link}
-                >
-                  View <span>→</span>
-                </a>
+        <section className={styles.Project_Preview}>
+
+            <div className={styles.project_overview}>
+              <h1>Project</h1>
+
+              {/* ----- Project 01: Adventure Games ----- */}
+              <div className={styles.project01}>
+                <div className={styles.project_Header}>
+                  <span className={styles.project_Status}>
+                    <span className={styles.status_Dot}></span>
+                    Live
+                  </span>
+
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.view_Link}
+                  >
+                    View <span>→</span>
+                  </a>
+                </div>
               </div>
-            </div>
 
-            <div className={styles.project_Preview}>
-              <div className={styles.project_Info}>
-                <h3>Adventure Games</h3>
-                <p><i>Academic Project</i></p>
+              <div className={styles.project_Preview}>
+                <div className={styles.project_Info}>
+                  <h3>Adventure Games</h3>
+                  <p><i>Academic Project</i></p>
+                </div>
               </div>
+
+              <br/>
+
+              {/* ----- Project 02: JRB Website ----- */}
+              <div className={styles.project02}>
+                <div className={styles.project_Header}>
+                  <span className={styles.project_Status}>
+                    <span className={styles.status_Dot}></span>
+                    Live
+                  </span>
+
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopen noreferrer"
+                    className={styles.view_Link}
+                  >
+                    View <span>→</span>
+                  </a>
+
+                  <div className={styles.project_Preview}>
+                    <div className={styles.project_Info}>
+                      <h3>JRB Website</h3>
+                      <p><i>Architecte Website</i></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
             <br/>
 
-            {/* ----- Project 02: JRB Website ----- */}
-            <div className={styles.project02}>
+            {/* ----- Project 03: Background Remover ----- */}
+            <div className={styles.project03}>
               <div className={styles.project_Header}>
                 <span className={styles.project_Status}>
                   <span className={styles.status_Dot}></span>
@@ -207,45 +242,14 @@ function HomeContent() {
 
                 <div className={styles.project_Preview}>
                   <div className={styles.project_Info}>
-                    <h3>JRB Website</h3>
-                    <p><i>Architecte Website</i></p>
+                    <h3>Background Remover</h3>
+                    <p><i>Background Image Remover</i></p>
                   </div>
                 </div>
               </div>
             </div>
-
-          </div>
-
-          <br/>
-
-          {/* ----- Project 03: Background Remover ----- */}
-          <div className={styles.project03}>
-            <div className={styles.project_Header}>
-              <span className={styles.project_Status}>
-                <span className={styles.status_Dot}></span>
-                Live
-              </span>
-
-              <a
-                href="#"
-                target="_blank"
-                rel="noopen noreferrer"
-                className={styles.view_Link}
-              >
-                View <span>→</span>
-              </a>
-
-              <div className={styles.project_Preview}>
-                <div className={styles.project_Info}>
-                  <h3>Background Remover</h3>
-                  <p><i>Background Image Remover</i></p>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </section>
-
+        
       </main>
     </div>
   );
