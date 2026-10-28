@@ -81,10 +81,15 @@ function HomeContent() {
         <section className={styles.aboutPreview}>
           <div className={styles.Experience_overview}>
             <h1>Experience</h1>
-            <h4>Full-Stack Web Developer</h4>
-            <h4>UI/UX Designer</h4>
-            <h4>Graphic Designer Intern</h4>
-            <h4>Game Developer</h4>
+            <hr/>
+            <h4>2026 - Full-Stack Web Developer</h4>
+            <p></p>
+            <hr/>
+            <h4>2025 - UI/UX Designer</h4>
+            <hr/>
+            <h4>2020 - Graphic Designer</h4>
+            <hr/>
+            <h4>2021 - Game Developer</h4>
           </div>
           
           <br/>
