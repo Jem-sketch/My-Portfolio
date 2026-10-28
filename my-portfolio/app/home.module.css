@@ -44,9 +44,10 @@
 /* HERO CONTAINER */
 /* ========================= */
 
-.container {
-  position: relative;
-
+.Profile_Preview {
+  position: sticky;
+  z-index: 1;
+  top: 0;
   width: 100%;
   min-height: 100vh;
 
@@ -69,7 +70,7 @@
 /* STATIC GRID */
 /* ========================= */
 
-.container::before {
+.Profile_Preview::before {
   content: "";
 
   position: absolute;
