@@ -54,7 +54,7 @@
 /* DEBUG OUTLINE */
 
 * {
-    outline: 1px solid rgba(255, 0, 0, 0) !important;
+    outline: 1px solid rgba(255, 0, 0, 0.267) !important;
 }
 
 html,
