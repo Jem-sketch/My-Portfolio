@@ -20,6 +20,9 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Jem Celestial | Full-stack Developer",
   description: "Portfolio of Full-stack Developer - Jem",
+  icons: {
+    icon: "/Logo_jem3.0.svg", // Path to your SVG file in the public folder
+  },
 };
 
 

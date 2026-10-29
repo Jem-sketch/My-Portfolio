@@ -32,7 +32,7 @@
 /* ========================= */
 
 .light {
-  --background: #ffffff;
+  --background: #e2e2e2;
   --text: #000000;
 
   /* Black static grid */
@@ -405,7 +405,6 @@
   top: 0;
   width: 100%;
   min-height: 100vh;
-
   background-color: var(--background);
   color: var(--text);
 
@@ -421,7 +420,6 @@
   top: 0;
   width: 100%;
   min-height: 100vh;
-
   background-color: var(--background);
   color: var(--text);
 
